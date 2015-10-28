@@ -3,6 +3,7 @@ package com.speakingfish.protocol.ssp.type;
 import java.io.OutputStream;
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -21,6 +22,7 @@ import com.speakingfish.protocol.ssp.LocalAny;
 import com.speakingfish.protocol.ssp.LocalAnyObject;
 import com.speakingfish.protocol.ssp.Types;
 //import com.speakingfish.protocol.ssp.ValueVisitor;
+
 
 /*
 import static com.speakingfish.common.traverse.Traverses.*;
@@ -136,7 +138,13 @@ public class ObjectImpl<CONTEXT> extends AnyDefaultImpl<CONTEXT, AnyObject> impl
         }
     }
     
-    @Override public int hashCode() { return _value.hashCode(); }
+    @Override public int hashCode() {
+        int result = 0;
+        for(final Any<?> value : _value) {
+            result+= value.hashCode();
+        }
+        return result;
+    }
 
     @Override public boolean equals(Object obj) {
         if(this == obj)
