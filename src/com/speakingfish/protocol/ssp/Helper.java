@@ -39,8 +39,10 @@ public class Helper {
     public static final byte SSP_TYPE_FLOAT_64   =16; // float64Type   BYTE_VALUE0 BYTE_VALUE1 BYTE_VALUE2 BYTE_VALUE3 BYTE_VALUE4 BYTE_VALUE5 BYTE_VALUE6 BYTE_VALUE7
     public static final byte SSP_TYPE_BYTE_ARRAY =20; // byteArrayType intType COUNT (                                 BYTE_VALUE)*
     
+  //public static final byte SSP_TYPE_MASK_META = (byte) 0x80;
+    
     public static final Creator<DateFormat, String> CREATOR_SimpleDateFormat = new Creator<DateFormat, String>() {
-        @Override public DateFormat create(String params) {
+        public DateFormat create(String params) {
             return new SimpleDateFormat(params);
         }};
     
@@ -58,7 +60,7 @@ public class Helper {
             _format = format;
         }
 
-        @Override public Date apply(String value) {
+        public Date apply(String value) {
             try {
                 return _format.get().parse(value);
             } catch(ParseException e) {
@@ -106,7 +108,7 @@ public class Helper {
     }
     
     public static final Mapper<Date, String> MAPPER_PARSE_TIMESTAMP = new Mapper<Date, String>() {
-        @Override public Date apply(String value) {
+        public Date apply(String value) {
             try {
                 return parseTimestamp(value);
             } catch(ParseException e) {
@@ -117,7 +119,7 @@ public class Helper {
     
     public static Mapper<Date, String> parseMapper(final DateFormat format) {
         return new Mapper<Date, String>() {
-            @Override public Date apply(String value) {
+            public Date apply(String value) {
                 try {
                     return format.parse(value);
                 } catch(ParseException e) {
@@ -129,7 +131,7 @@ public class Helper {
 
     public static Mapper<String, Date> formatMapper(final DateFormat format) {
         return new Mapper<String, Date>() {
-            @Override public String apply(Date value) {
+            public String apply(Date value) {
                 return format.format(value);
             }
         };
@@ -137,7 +139,7 @@ public class Helper {
 
     public static <SRC> Mapper<String, SRC> reformatMapper(final Mapper<Date, SRC> parseMapper, final DateFormat format) {
         return new Mapper<String, SRC>() {
-            @Override public String apply(SRC value) {
+            public String apply(SRC value) {
                 return format.format(parseMapper.apply(value));
             }
         };
@@ -145,7 +147,7 @@ public class Helper {
     
     public static <SRC> Mapper<String, SRC> reformatTimestampMapper(final Mapper<String, SRC> srcMapper, final DateFormat format) {
         return new Mapper<String, SRC>() {
-            @Override public String apply(SRC value) {
+            public String apply(SRC value) {
                 try {
                     return format.format(parseTimestamp(srcMapper.apply(value)));
                 } catch(ParseException e) {
@@ -178,7 +180,7 @@ public class Helper {
     public static <T> Any<T> asUnmodifiable(Any<T> origin) { return (null == origin) ? null : origin.asUnmodifiable(); }
     
     public static final Mapper<Any<?>, Any<?>> MAPPER_AS_UNMODIFIABLE = new Mapper<Any<?>, Any<?>>() {
-        @Override public Any<?> apply(Any<?> value) {
+        public Any<?> apply(Any<?> value) {
             return asUnmodifiable(value);
         }};
     
@@ -187,11 +189,13 @@ public class Helper {
 
     public static <T> Mapper<T, Any<?>> extractValueMapper(final Named<T> name) {
         return new Mapper<T, Any<?>>() {
-            @Override public T apply(Any<?> value) {
+            public T apply(Any<?> value) {
                 return value.value(name);
             }
         };
     }
+
+    public static <T> T valueOf(Any<T> src) { return (null == src) ? null : src.get(); } 
     
     // compatibility
     
@@ -209,7 +213,7 @@ public class Helper {
     public static byte[] toBytes(Any<?> src) {
         return com.speakingfish.protocol.ssp.bin.Helper.toBytes(src);
     }
-
+    
     protected Helper() {}
     
 }

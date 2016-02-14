@@ -61,16 +61,16 @@ public class AnyUnmodifiableImpl<CONTEXT, TYPE> extends AnyAbstractImpl<CONTEXT,
     @Override public Any<?> update (String  name, Any<?> value) { throw new UnsupportedOperationException(); };
     @Override public Any<?> remove (int    index              ) { throw new UnsupportedOperationException(); };
     @Override public Any<?> remove (String  name              ) { throw new UnsupportedOperationException(); };
-    @Override public int    indexOf(String  name              ) { return                   _origin.indexOf(name ) ; };
-    @Override public String nameOf (int    index              ) { return                   _origin.nameOf (index) ; };
+    @Override public int    indexOf(String  name              ) { return                       _origin.indexOf(name ) ; };
+    @Override public String nameOf (int    index              ) { return                       _origin.nameOf (index) ; };
     @Override public Any<?> item   (int    index              ) { return Helper.asUnmodifiable(_origin.item   (index)); };
     @Override public Any<?> item   (String  name              ) { return Helper.asUnmodifiable(_origin.item   (name )); };
     
-    @Override public <T> int    add    (Named<T> name, Any<T> value) { return _origin.add    (name, value); };
-    @Override public <T> Any<T> update (Named<T> name, Any<T> value) { return _origin.update (name, value); };
-    @Override public <T> Any<T> remove (Named<T> name              ) { return _origin.remove (name       ); };
-    @Override public <T> Any<T> item   (Named<T> name              ) { return _origin.item   (name       ); };
-    @Override public <T> T      value  (Named<T> name              ) { return _origin.value  (name       ); };
+    @Override public <T> int    add    (Named<T> name, Any<T> value) { throw new UnsupportedOperationException(); };
+    @Override public <T> Any<T> update (Named<T> name, Any<T> value) { throw new UnsupportedOperationException(); };
+    @Override public <T> Any<T> remove (Named<T> name              ) { throw new UnsupportedOperationException(); };
+    @Override public <T> Any<T> item   (Named<T> name              ) { return         Helper.asUnmodifiable(_origin.item(name)) ; };
+    @Override public <T> T      value  (Named<T> name              ) { return valueOf(Helper.asUnmodifiable(_origin.item(name))); };
     @Deprecated
     @Override public void writeTo(OutputStream dest) { _origin.writeTo(dest); }
     

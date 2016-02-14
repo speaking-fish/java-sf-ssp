@@ -12,8 +12,6 @@ import com.speakingfish.protocol.ssp.Any;
 
 public abstract class AnyDefaultImpl<CONTEXT, TYPE> extends AnyAbstractImpl<CONTEXT, TYPE> implements Serializable, Cloneable {
     
-    protected transient Any<TYPE> _unmodifiable;
-
   //@Override public short        type           () { throw new UnsupportedOperationException(); };
     @Override public int          size           () { throw new UnsupportedOperationException(); };
   //@Override public String       toString       () { throw new UnsupportedOperationException(); };
@@ -57,15 +55,6 @@ public abstract class AnyDefaultImpl<CONTEXT, TYPE> extends AnyAbstractImpl<CONT
     
     @Override public List<              Any<?> > values () { throw new UnsupportedOperationException(); };
     @Override public List<Entry<String, Any<?>>> entries() { throw new UnsupportedOperationException(); };
-    
-    @Override public Any<TYPE> asUnmodifiable() {
-        if(null == _unmodifiable) {
-            _unmodifiable = makeUnmodifiable();
-        }
-        return _unmodifiable;
-    };
-    
-    abstract protected Any<TYPE> makeUnmodifiable();
     
     protected Object writeReplace() throws ObjectStreamException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();

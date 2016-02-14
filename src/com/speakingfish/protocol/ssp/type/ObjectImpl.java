@@ -23,13 +23,15 @@ import com.speakingfish.protocol.ssp.Types;
 //import com.speakingfish.protocol.ssp.ValueVisitor;
 
 
+
 /*
 import static com.speakingfish.common.traverse.Traverses.*;
 */
 import static com.speakingfish.protocol.ssp.bin.Helper.*;
 
 
-public class ObjectImpl<CONTEXT> extends AnyDefaultImpl<CONTEXT, AnyObject> implements LocalAnyObject<CONTEXT> {
+@SuppressWarnings("serial")
+public class ObjectImpl<CONTEXT> extends AnyDefaultMutableImpl<CONTEXT, AnyObject> implements LocalAnyObject<CONTEXT> {
     
     protected final List<String> _names;
     protected final List<Any<?>> _value;

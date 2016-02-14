@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+
 //import com.speakingfish.common.function.Invoker;
 /*
 import com.speakingfish.common.traverse.Proceed;
@@ -20,13 +21,15 @@ import com.speakingfish.protocol.ssp.LocalAnyArray;
 import com.speakingfish.protocol.ssp.Types;
 //import com.speakingfish.protocol.ssp.ValueVisitor;
 
+
 import static com.speakingfish.common.iterator.Iterators.*;
 /*
 import static com.speakingfish.common.traverse.Traverses.*;
 */
 import static com.speakingfish.protocol.ssp.bin.Helper.*;
 
-public class ArrayImpl<CONTEXT> extends AnyDefaultImpl<CONTEXT, AnyArray> implements LocalAnyArray<CONTEXT> {
+@SuppressWarnings("serial")
+public class ArrayImpl<CONTEXT> extends AnyDefaultMutableImpl<CONTEXT, AnyArray> implements LocalAnyArray<CONTEXT> {
     
     public static ArrayImpl<Object> createOwnList(List<Any<?>> value) {
         return new ArrayImpl<Object>(value);

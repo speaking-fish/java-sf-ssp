@@ -315,11 +315,11 @@ public class Types {
     }
     
     public static final Mapper<String, Any<?>> MAPPER_ANY_AS_STRING = new Mapper<String, Any<?>>() {
-        @Override public String apply(Any<?> value) { return value.asString(); }
+        public String apply(Any<?> value) { return value.asString(); }
     };
 
     public static final Mapper<Object, Any<?>> MAPPER_ANY_VALUE = new Mapper<Object, Any<?>>() {
-        @Override public Object apply(Any<?> value) { return value.get(); }
+        public Object apply(Any<?> value) { return value.get(); }
     };
 
     public static final Mapper<Entry<String, Object>, Entry<String, Any<?>>> MAPPER_MAKE_ENTRY_ANY_VALUE = makeEntryValueMapper(MAPPER_ANY_VALUE);

@@ -22,7 +22,7 @@ import static com.speakingfish.protocol.ssp.Helper.*;
 public class Helper {
 
     public static final Mapper<Any<?>, byte[]> MAPPER_BYTES_TO_ANY = new Mapper<Any<?>, byte[]>() {
-        @Override public Any<?> apply(byte[] value) {
+        public Any<?> apply(byte[] value) {
             try {
                 return readAny(value);
             } catch(EOFException e) {
@@ -32,7 +32,7 @@ public class Helper {
     };
     
     public static final Mapper<byte[], Any<?>> MAPPER_ANY_TO_BYTES = new Mapper<byte[], Any<?>>() {
-        @Override public byte[] apply(Any<?> value) {
+        public byte[] apply(Any<?> value) {
             return toBytes(value);
         }
     };

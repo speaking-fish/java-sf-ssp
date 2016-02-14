@@ -2,6 +2,7 @@ package com.speakingfish.protocol.ssp.type;
 
 import java.io.OutputStream;
 
+
 /*
 import com.speakingfish.common.traverse.Proceed;
 import com.speakingfish.common.traverse.VisitorHolder;
@@ -10,6 +11,7 @@ import com.speakingfish.protocol.ssp.Any;
 import com.speakingfish.protocol.ssp.Helper;
 import com.speakingfish.protocol.ssp.LocalAny;
 //import com.speakingfish.protocol.ssp.ValueVisitor;
+
 
 /*
 import static com.speakingfish.common.traverse.Traverses.*;
@@ -70,10 +72,12 @@ public class IntImpl<CONTEXT> extends AnyDefaultPrimitiveImpl<CONTEXT, Long> {
         
         return _value == other.asInt();
     }
+/*
+    @Override public LocalAny<CONTEXT, Long> clone() { return this; }
 
-    @Override public LocalAny<CONTEXT, Long> clone() {
-        return new IntImpl<CONTEXT>(_value);
-    }
+    @Override public Any<Long> asUnmodifiable() { return this; }
+*/
+    
 
     /*
     @Override public void visit(TypeVisitor visitor) {
