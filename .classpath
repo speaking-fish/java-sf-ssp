@@ -8,8 +8,8 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/java-sf-common-type"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/java-sf-wrapped-exception"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/java-sf-common"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/java-sf-common-closeable"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/java-sf-common-iterator"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/java-sf-pipe-common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/java-sf-common-closeable-lt17"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

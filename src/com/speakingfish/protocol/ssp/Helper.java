@@ -42,7 +42,7 @@ public class Helper {
   //public static final byte SSP_TYPE_MASK_META = (byte) 0x80;
     
     public static final Creator<DateFormat, String> CREATOR_SimpleDateFormat = new Creator<DateFormat, String>() {
-        public DateFormat create(String params) {
+        public DateFormat apply(String params) {
             return new SimpleDateFormat(params);
         }};
     
