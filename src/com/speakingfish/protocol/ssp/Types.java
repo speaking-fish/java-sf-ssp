@@ -8,6 +8,8 @@ import static java.util.Arrays.asList;
 
 import java.util.Map.Entry;
 
+import com.speakingfish.common.annotation.Compatibility.*;
+
 import com.speakingfish.common.function.Getter;
 import com.speakingfish.common.function.Mapper;
 import com.speakingfish.common.type.DefaultValue;
@@ -377,4 +379,6 @@ public class Types {
         return addAbsent(parent, name.id(), value);
     }
     
+    static { Dummy.dummy(); }
+
 }
