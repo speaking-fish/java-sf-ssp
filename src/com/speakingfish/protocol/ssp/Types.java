@@ -9,7 +9,7 @@ import static java.util.Arrays.asList;
 import java.util.Map.Entry;
 
 import com.speakingfish.common.annotation.Compatibility.*;
-
+import com.speakingfish.common.function.Acceptor;
 import com.speakingfish.common.function.Getter;
 import com.speakingfish.common.function.Mapper;
 import com.speakingfish.common.type.DefaultValue;
@@ -43,6 +43,11 @@ public class Types {
     public static Any<BigDecimal> any(BigDecimal value) { return new DecimalImpl  <Object>(       value) ; }
     public static Any<byte[]    > any(byte[]     value) { return new ByteArrayImpl<Object>(       value) ; }
     
+    public static Any<AnyArray> anyArray() {
+        return new ArrayImpl<Object>();
+    }
+    
+    @SafeVarargs
     public static Any<AnyArray> anyArray(Any<?>... value) {
         final ArrayImpl<?> result = new ArrayImpl<Object>();
         if(0 < value.length) {
@@ -61,6 +66,10 @@ public class Types {
         final ArrayImpl<?> result = new ArrayImpl<Object>();
         result.addAll(value);
         return result;
+    }
+    
+    public static Any<AnyObject> anyObject() {
+        return new ObjectImpl<Object>();
     }
     
     @SafeVarargs
@@ -282,6 +291,10 @@ public class Types {
         return SSP_TYPE_HOLDER != item.type(); 
     }
 
+    public static final Acceptor<Any<?>> ACCEPTOR_SERIALIZABLE = new Acceptor<Any<?>>() {
+        public boolean test(Any<?> src) { return isSerializable(src); }
+    };
+    
     public static boolean matchMask(Any<?> src, Any<?> mask) {
         if(SSP_TYPE_ARRAY == src.type()) { 
             return false;                                        // src=[]
