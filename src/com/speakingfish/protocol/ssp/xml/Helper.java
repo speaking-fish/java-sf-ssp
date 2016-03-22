@@ -69,8 +69,10 @@ public class Helper {
     public static Element appendObject(Node dest, final Any<?> src) {
         final Element result = appendElement(dest, XML_TAG_OBJECT);
         for(int i = 0; i < src.size(); ++i) {
-            final Element child = appendAny(result, src.item(i));
-            child.setAttribute(XML_ATTR_NAME, src.nameOf(i));
+            if(isSerializable(src.item(i))) {
+                final Element child = appendAny(result, src.item(i));
+                child.setAttribute(XML_ATTR_NAME, src.nameOf(i));
+            }
         }
         return result;
     }
@@ -78,7 +80,9 @@ public class Helper {
     public static Element appendArray(Node dest, final Any<?> src) {
         final Element result = appendElement(dest, XML_TAG_ARRAY);
         for(int i = 0; i < src.size(); ++i) {
-            /*Element child =*/ appendAny(result, src.item(i));
+            if(isSerializable(src.item(i))) {
+                /*Element child =*/ appendAny(result, src.item(i));
+            }
         }
         return result;
     }
@@ -296,6 +300,7 @@ public class Helper {
         Transformer transformer;
         try {
             transformer = __transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         } catch(TransformerConfigurationException e) {
             throw new RuntimeException(e);
         }

@@ -43,6 +43,12 @@ public class Types {
     public static Any<BigDecimal> any(BigDecimal value) { return new DecimalImpl  <Object>(       value) ; }
     public static Any<byte[]    > any(byte[]     value) { return new ByteArrayImpl<Object>(       value) ; }
     
+    public static Mapper<Any<?>, String    > MAPPER_ANY_STRING    = new Mapper<Any<?>, String    >() { public Any<String    > apply(String     v) { return any(v); } };
+    public static Mapper<Any<?>, Long      > MAPPER_ANY_INT       = new Mapper<Any<?>, Long      >() { public Any<Long      > apply(Long       v) { return any(v); } };
+    public static Mapper<Any<?>, Double    > MAPPER_ANY_FLOAT     = new Mapper<Any<?>, Double    >() { public Any<Double    > apply(Double     v) { return any(v); } };
+    public static Mapper<Any<?>, BigDecimal> MAPPER_ANY_DECIMAL   = new Mapper<Any<?>, BigDecimal>() { public Any<BigDecimal> apply(BigDecimal v) { return any(v); } };
+    public static Mapper<Any<?>, byte[]    > MAPPER_ANY_BYTE_ARRAY= new Mapper<Any<?>, byte[]    >() { public Any<byte[]    > apply(byte[]     v) { return any(v); } };
+    
     public static Any<AnyArray> anyArray() {
         return new ArrayImpl<Object>();
     }
