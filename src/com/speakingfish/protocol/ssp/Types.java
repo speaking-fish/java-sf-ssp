@@ -111,11 +111,11 @@ public class Types {
     public static <CONTEXT> LocalAny<CONTEXT, BigDecimal> localAny(BigDecimal value) { return new DecimalImpl  <CONTEXT>(       value) ; }
     public static <CONTEXT> LocalAny<CONTEXT, byte[]    > localAny(byte[]     value) { return new ByteArrayImpl<CONTEXT>(       value) ; }
     
-    public static <CONTEXT> LocalAny<CONTEXT, AnyArray> localAnyArray() {
+    public static <CONTEXT> LocalAnyArray<CONTEXT> localAnyArray() {
         return new ArrayImpl<CONTEXT>();
     }
     
-    public static <CONTEXT> LocalAny<CONTEXT, AnyObject> localAnyObject() {
+    public static <CONTEXT> LocalAnyObject<CONTEXT> localAnyObject() {
         return new ObjectImpl<CONTEXT>();
     }
     
