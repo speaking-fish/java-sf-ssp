@@ -31,6 +31,9 @@ import org.xml.sax.SAXException;
 import com.speakingfish.protocol.ssp.Any;
 
 import static org.w3c.dom.Node.*;
+
+import static com.speakingfish.common.closeable.Closeables.*;
+
 import static com.speakingfish.protocol.ssp.Types.*;
 import static com.speakingfish.protocol.ssp.Helper.*;
 
@@ -315,7 +318,7 @@ public class Helper {
         return temp.toString();
     }
 
-    public static boolean anyToXmlFile(final Any<?> src, final String destFilename) {
+    public static boolean anyToXmlFile(final Any<?> src, FileWriter dest) {
         DocumentBuilder docBuilder;
         try {
             docBuilder = __docFactory.newDocumentBuilder();
@@ -333,21 +336,35 @@ public class Helper {
         }
         final DOMSource source = new DOMSource(document);
         try {
-            final FileWriter temp = new FileWriter(destFilename);
             try {
-                final StreamResult result = new StreamResult(temp);
+                final StreamResult result = new StreamResult(dest);
                 transformer.transform(source, result);
             } finally {
-                temp.close();
+                catchClose(dest);
             }
-        } catch(IOException e) {
-            return false;
         } catch(TransformerException e) {
             return false;
         } 
         return true;
     }
+    
+    public static boolean anyToXmlFile(final Any<?> src, final String destFilename) {
+        try {
+            return anyToXmlFile(src, new FileWriter(destFilename));
+        } catch(IOException e) {
+            return false;
+        } 
+    }
 
+    public static boolean anyToXmlFile(final Any<?> src, final File destFile) {
+        try {
+            return anyToXmlFile(src, new FileWriter(destFile));
+        } catch(IOException e) {
+            return false;
+        } 
+    }
+
+    
     public static Any<?> xmlStringToAny(final String src) {
         DocumentBuilder docBuilder;
         try {
