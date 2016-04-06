@@ -129,15 +129,15 @@ public class Types {
 //        return /*(RESULT)*/ result;
 //    }
 //    @SuppressWarnings("unchecked")
-//    @SafeVarargs
-//    public static <CONTEXT, RESULT extends LocalAnyObject<CONTEXT>> RESULT localAny(
-//        Entry<? extends LocalNamed<CONTEXT, ?>, ? extends LocalAny<?, ?>>... value
-//    ) {
-//        //(Collection<Entry<String, ? extends Any<?>>>) (Collection<?>) asList(value));
-//        final ObjectImpl<CONTEXT> result = new ObjectImpl<CONTEXT>();
-//        result.addLocalEntries(asList(value));
-//        return (RESULT) result;
-//    }
+    @SafeVarargs
+    public static <CONTEXT> LocalAnyObject<CONTEXT> localAnyObject(
+        Entry<? extends LocalNamed<CONTEXT, ?>, ? extends LocalAny<?, ?>>... value
+    ) {
+        //(Collection<Entry<String, ? extends Any<?>>>) (Collection<?>) asList(value));
+        final ObjectImpl<CONTEXT> result = new ObjectImpl<CONTEXT>();
+        result.addLocalEntries(asList(value));
+        return result;
+    }
 //    */
     
     public static <         T> Any     <         T>      anyHolder(Getter<T> value) { return new HolderImpl<Object , T>(value) ; }
@@ -176,17 +176,20 @@ public class Types {
         return keyValue(name, value);
     }
     
+    @SuppressWarnings("unchecked")
     public static <
         T, 
-        CONTEXT,
-        SUBCONTEXT,
-        LOCAL_NAMED_CONTEXT_T  extends LocalNamed<CONTEXT   , T>,
-        LOCAL_ANY_SUBCONTEXT_T extends LocalAny  <SUBCONTEXT, T>
-    > Entry<LOCAL_NAMED_CONTEXT_T, LOCAL_ANY_SUBCONTEXT_T> localEntry(
-        LOCAL_NAMED_CONTEXT_T  name ,
-        LOCAL_ANY_SUBCONTEXT_T value
+        T_CONTEXT,
+        T_SUBCONTEXT,
+        T_LocalNamed__CONTEXT_T  extends LocalNamed<T_CONTEXT   , T>,
+        T_LocalAny__SUBCONTEXT_T extends LocalAny  <T_SUBCONTEXT, T>/*,
+        T_Any__T                 extends      Any  <              T>*/
+    > Entry<T_LocalNamed__CONTEXT_T, T_LocalAny__SUBCONTEXT_T> localEntry(
+        T_LocalNamed__CONTEXT_T  name ,
+        //T_Any__T value
+        Any<T> value
     ) {
-        return keyValue(name, value);
+        return keyValue(name, (T_LocalAny__SUBCONTEXT_T) value);
     }
     
     public static     Entry<String, Any<String    >> named(String name, String     value) { return entry(name, any(value)); }
@@ -223,11 +226,11 @@ public class Types {
                                                                                                                   return namedEntry(name, namedAnyObject(value)); }
     public static <T> Entry<Named<T     >, Any<T       >> namedHolder(Named<T         > name, Getter<T>  value) { return namedEntry(name, anyHolder(value)); }
 
-    public static <CONTEXT, SUBCONTEXT> Entry<LocalNamed<CONTEXT, String    >, LocalAny<SUBCONTEXT, String    >> local(LocalNamed<CONTEXT, String    > name, String     value) { return localEntry(name, Types.<SUBCONTEXT>localAny(value)); }
-    public static <CONTEXT, SUBCONTEXT> Entry<LocalNamed<CONTEXT, Long      >, LocalAny<SUBCONTEXT, Long      >> local(LocalNamed<CONTEXT, Long      > name, long       value) { return localEntry(name, Types.<SUBCONTEXT>localAny(value)); }
-    public static <CONTEXT, SUBCONTEXT> Entry<LocalNamed<CONTEXT, Double    >, LocalAny<SUBCONTEXT, Double    >> local(LocalNamed<CONTEXT, Double    > name, double     value) { return localEntry(name, Types.<SUBCONTEXT>localAny(value)); }
-    public static <CONTEXT, SUBCONTEXT> Entry<LocalNamed<CONTEXT, BigDecimal>, LocalAny<SUBCONTEXT, BigDecimal>> local(LocalNamed<CONTEXT, BigDecimal> name, BigDecimal value) { return localEntry(name, Types.<SUBCONTEXT>localAny(value)); }
-    public static <CONTEXT, SUBCONTEXT> Entry<LocalNamed<CONTEXT, byte[]    >, LocalAny<SUBCONTEXT, byte[]    >> local(LocalNamed<CONTEXT, byte[]    > name, byte[]     value) { return localEntry(name, Types.<SUBCONTEXT>localAny(value)); }
+    public static <C, S, LN extends LocalNamed<C, String    >, LA extends LocalAny<S, String    >> Entry<LN, LA> local(LN name, String     value) { return Types.<String    , C, S, LN, LA>localEntry(name, any(value)); }
+    public static <C, S, LN extends LocalNamed<C, Long      >, LA extends LocalAny<S, Long      >> Entry<LN, LA> local(LN name, long       value) { return Types.<Long      , C, S, LN, LA>localEntry(name, any(value)); }
+    public static <C, S, LN extends LocalNamed<C, Double    >, LA extends LocalAny<S, Double    >> Entry<LN, LA> local(LN name, double     value) { return Types.<Double    , C, S, LN, LA>localEntry(name, any(value)); }
+    public static <C, S, LN extends LocalNamed<C, BigDecimal>, LA extends LocalAny<S, BigDecimal>> Entry<LN, LA> local(LN name, BigDecimal value) { return Types.<BigDecimal, C, S, LN, LA>localEntry(name, any(value)); }
+    public static <C, S, LN extends LocalNamed<C, byte[]    >, LA extends LocalAny<S, byte[]    >> Entry<LN, LA> local(LN name, byte[]     value) { return Types.<byte[]    , C, S, LN, LA>localEntry(name, any(value)); }
     ///
     /// "T_" = generic name prefix
     /// "__" = generic start = "<"
@@ -286,10 +289,25 @@ public class Types {
         return valueOf(any, name.origin(), name.defaultValue());
     }
 
-    public static <CONTEXT, T> Entry<LocalNamed<CONTEXT, T>, LocalAny<CONTEXT, T>> localHolder(
-        LocalNamed<CONTEXT, T> name, Getter<T>value
+//    public static <CONTEXT, SUBCONTEXT, T> Entry<LocalNamed<CONTEXT, T>, LocalAny<SUBCONTEXT, T>> localHolder(
+//        LocalNamed<CONTEXT, T> name, Getter<T>value
+//    ) {
+//        //return localEntry(name, Types.<SUBCONTEXT, T>localAnyHolder(value)); 
+//        return Types.<T, CONTEXT, SUBCONTEXT, LocalNamed<CONTEXT, T>, LocalAny<SUBCONTEXT, T>>localEntry(name, anyHolder(value)); 
+//    }
+
+    public static <
+        T,
+        T_CONTEXT,
+        T_SUBCONTEXT,
+        T_LocalNamed__T_CONTEXT__T extends LocalNamed<T_CONTEXT, T>,
+        T_LocalAny__T_SUBCONTEXT__T extends LocalAny<T_SUBCONTEXT, T>
+    > Entry<T_LocalNamed__T_CONTEXT__T, T_LocalAny__T_SUBCONTEXT__T> localHolder(
+            T_LocalNamed__T_CONTEXT__T name, Getter<T> value
     ) {
-        return localEntry(name, Types.<CONTEXT, T>localAnyHolder(value)); 
+        //return localEntry(name, Types.<SUBCONTEXT, T>localAnyHolder(value)); 
+        //return Types.<T, CONTEXT, SUBCONTEXT, LocalNamed<CONTEXT, T>, LocalAny<SUBCONTEXT, T>>localEntry(name, anyHolder(value)); 
+        return Types.<T, T_CONTEXT, T_SUBCONTEXT, T_LocalNamed__T_CONTEXT__T, T_LocalAny__T_SUBCONTEXT__T>localEntry(name, anyHolder(value)); 
     }
     
     public static int serializableSize(Any<?> src) {
@@ -405,6 +423,11 @@ public class Types {
     
     public static final <CONTEXT, T> Any<T> addAbsent(LocalAny<CONTEXT, ?> parent, LocalNamed<CONTEXT, T> name, Any<T> value) {
         return addAbsent(parent, name.id(), value);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public static <T_ANY extends Any<T>, T> T_ANY asUnmodifiable(T_ANY src) {
+        return (T_ANY) src.asUnmodifiable();
     }
     
     static { Dummy.dummy(); }

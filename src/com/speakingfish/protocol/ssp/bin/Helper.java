@@ -120,13 +120,13 @@ public class Helper {
     
     protected static void writeInt64Data    (OutputStream dest, long   value) {
        internalWrite(dest, new byte[] {(byte) (value >>> (8 * 7)),
-                                          (byte) (value >>> (8 * 6)),
-                                          (byte) (value >>> (8 * 5)),
-                                          (byte) (value >>> (8 * 4)),
-                                          (byte) (value >>> (8 * 3)),
-                                          (byte) (value >>> (8 * 2)),
-                                          (byte) (value >>> (8 * 1)),
-                                          (byte) (value >>> (8 * 0))});
+                                       (byte) (value >>> (8 * 6)),
+                                       (byte) (value >>> (8 * 5)),
+                                       (byte) (value >>> (8 * 4)),
+                                       (byte) (value >>> (8 * 3)),
+                                       (byte) (value >>> (8 * 2)),
+                                       (byte) (value >>> (8 * 1)),
+                                       (byte) (value >>> (8 * 0))});
     }
     
     public static void writeFloat        (OutputStream dest, double value) {
