@@ -100,6 +100,7 @@ public class Types {
     }
     
     public static Any<AnyObject> namedAnyObject(Iterable<? extends Entry<? extends Named<?>, ? extends Any<?>>> value) {
+    //public static Any<AnyObject> namedAnyObject(Iterable<Entry<Named<?>, Any<?>>> value) {
         final ObjectImpl<?> result = new ObjectImpl<Object>();
         result.addNamedEntries(value);
         return result;
@@ -226,6 +227,7 @@ public class Types {
                                                                                                                   return namedEntry(name, namedAnyObject(value)); }
     public static <T> Entry<Named<T     >, Any<T       >> namedHolder(Named<T         > name, Getter<T>  value) { return namedEntry(name, anyHolder(value)); }
 
+                                      //Entry<T_LocalNamed__CONTEXT_T, T_LocalAny__SUBCONTEXT_T>
     public static <C, S, LN extends LocalNamed<C, String    >, LA extends LocalAny<S, String    >> Entry<LN, LA> local(LN name, String     value) { return Types.<String    , C, S, LN, LA>localEntry(name, any(value)); }
     public static <C, S, LN extends LocalNamed<C, Long      >, LA extends LocalAny<S, Long      >> Entry<LN, LA> local(LN name, long       value) { return Types.<Long      , C, S, LN, LA>localEntry(name, any(value)); }
     public static <C, S, LN extends LocalNamed<C, Double    >, LA extends LocalAny<S, Double    >> Entry<LN, LA> local(LN name, double     value) { return Types.<Double    , C, S, LN, LA>localEntry(name, any(value)); }

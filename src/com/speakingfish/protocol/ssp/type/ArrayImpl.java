@@ -50,7 +50,9 @@ public class ArrayImpl<CONTEXT> extends AnyDefaultMutableImpl<CONTEXT, AnyArray>
     
     public void addAll(Iterator<Any<?>> values) {
         for(Any<?> value : iterableOf(values)) {
-            _value.add(value);
+            if(null != value) {
+                _value.add(value);
+            }
         }
     }
     

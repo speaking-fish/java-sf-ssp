@@ -58,19 +58,25 @@ public class ObjectImpl<CONTEXT> extends AnyDefaultMutableImpl<CONTEXT, AnyObjec
 
     public void addStringEntries(Iterable<Entry<String, ? extends Any<?>>> items) {
         for(final Entry<String, ? extends Any<?>> item : items) {
-            add(item.getKey(), item.getValue());
+            if((null != item) && (null != item.getKey()) && (null != item.getValue())) {
+                add(item.getKey(), item.getValue());
+            }
         }
     }
     
     public void addNamedEntries(Iterable<? extends Entry<? extends Named<?>, ? extends Any<?>>> items) {
         for(final Entry<? extends Named<?>, ? extends Any<?>> item : items) {
-            add(item.getKey().id(), item.getValue());
+            if((null != item) && (null != item.getKey()) && (null != item.getValue())) {
+                add(item.getKey().id(), item.getValue());
+            }
         }
     }
     
     public void addLocalEntries(Iterable<Entry<? extends LocalNamed<CONTEXT, ?>, ? extends LocalAny<?, ?>>> items) {
         for(final Entry<? extends Named<?>, ? extends Any<?>> item : items) {
-            add(item.getKey().id(), item.getValue());
+            if((null != item) && (null != item.getKey()) && (null != item.getValue())) {
+                add(item.getKey().id(), item.getValue());
+            }
         }
     }
     
