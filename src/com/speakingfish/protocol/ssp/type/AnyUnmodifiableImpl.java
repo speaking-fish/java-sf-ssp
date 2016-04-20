@@ -25,6 +25,7 @@ import static java.util.Collections.*;
 import static com.speakingfish.common.collection.CollectionHelper.*;
 import static com.speakingfish.common.iterator.Iterators.*;
 import static com.speakingfish.protocol.ssp.Helper.*;
+import static com.speakingfish.protocol.ssp.Types.*;
 
 public class AnyUnmodifiableImpl<CONTEXT, TYPE> extends AnyAbstractImpl<CONTEXT, TYPE> {
     

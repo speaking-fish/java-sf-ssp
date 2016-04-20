@@ -8,7 +8,6 @@ import com.speakingfish.common.function.Getter;
 import com.speakingfish.common.traverse.Proceed;
 import com.speakingfish.common.traverse.VisitorHolder;
 */
-import com.speakingfish.common.type.Typecasts;
 import com.speakingfish.protocol.ssp.Any;
 import com.speakingfish.protocol.ssp.LocalAny;
 //import com.speakingfish.protocol.ssp.ValueVisitor;
@@ -18,6 +17,7 @@ import com.speakingfish.protocol.ssp.LocalAny;
 import static com.speakingfish.common.traverse.Traverses.*;
 */
 import static com.speakingfish.common.Hashes.*;
+import static com.speakingfish.common.Equals.*;
 import static com.speakingfish.protocol.ssp.Helper.*;
 
 /**
@@ -58,7 +58,7 @@ public class HolderImpl<CONTEXT, TYPE> extends AnyDefaultPrimitiveImpl<CONTEXT, 
         if(type() != other.type())
             return false;
         
-        return Typecasts.equals(_value, other.asHolder(), Typecasts.classTyped(Getter.class));
+        return equalsOf(_value, other.asHolder(), Getter.class);
     }
     
     @Override public void writeTo(OutputStream dest) { throw new UnsupportedOperationException(); }

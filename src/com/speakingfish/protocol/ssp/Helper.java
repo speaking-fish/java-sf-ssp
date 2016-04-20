@@ -195,8 +195,6 @@ public class Helper {
         };
     }
 
-    public static <T> T valueOf(Any<T> src) { return (null == src) ? null : src.get(); } 
-    
     // compatibility
     
     public static final Mapper<Any<?>, byte[]> MAPPER_BYTES_TO_ANY = com.speakingfish.protocol.ssp.bin.Helper.MAPPER_BYTES_TO_ANY;

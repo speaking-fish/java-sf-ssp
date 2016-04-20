@@ -37,6 +37,8 @@ public class Types {
         return (Any<T>) src;
     }
     
+    public static <CONTEXT, T> Typed<LocalAny<CONTEXT, T>> localAnyTyped() { return null; }
+    
     public static Any<String    > any(String     value) { return new StringImpl   <Object>(       value) ; }
     public static Any<Long      > any(long       value) { return new IntImpl      <Object>(       value) ; }
     public static Any<Double    > any(double     value) { return new FloatImpl    <Object>(       value) ; }
@@ -273,6 +275,8 @@ public class Types {
 //        return keyValue(name, Types.<Object/*T_Subcontext*/, T_LocalAnyObject__T_SubContext>localAny(value));
 //    }
     
+    public static <T> T valueOf(Any<T> src) { return (null == src) ? null : src.get(); } 
+    
     public static <T> T valueOf(Any<T> any, T defaultValue) {
         return (null == any) ? defaultValue : any.get();
     }
@@ -281,6 +285,10 @@ public class Types {
         return (null == any) ? defaultValue : valueOf(any.item(name), defaultValue);
     }
 
+    public static <C, T> T valueOf(LocalAny<C, ?> any, LocalNamed<C, T> name, T defaultValue) {
+        return (null == any) ? defaultValue : valueOf(any.item(name), defaultValue);
+    }
+    
     /*
     public static <T> T valueOf(Any<?> any, Named<T> name) {
         return valueOf(any, name, null);
@@ -291,6 +299,11 @@ public class Types {
         return valueOf(any, name.origin(), name.defaultValue());
     }
 
+    public static <C, T> T valueOf(LocalAny<C, ?> any, DefaultValue<LocalNamed<C, T>, T> name) {
+        return valueOf(any, name.origin(), name.defaultValue());
+    }
+    
+    
 //    public static <CONTEXT, SUBCONTEXT, T> Entry<LocalNamed<CONTEXT, T>, LocalAny<SUBCONTEXT, T>> localHolder(
 //        LocalNamed<CONTEXT, T> name, Getter<T>value
 //    ) {
