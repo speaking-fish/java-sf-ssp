@@ -440,11 +440,6 @@ public class Types {
         return addAbsent(parent, name.id(), value);
     }
     
-    @SuppressWarnings("unchecked")
-    public static <T_ANY extends Any<T>, T> T_ANY asUnmodifiable(T_ANY src) {
-        return (T_ANY) src.asUnmodifiable();
-    }
-    
     static { Dummy.dummy(); }
 
 }

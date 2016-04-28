@@ -177,7 +177,10 @@ public class Helper {
         }
     }
     
-    public static <T> Any<T> asUnmodifiable(Any<T> origin) { return (null == origin) ? null : origin.asUnmodifiable(); }
+    @SuppressWarnings("unchecked")
+    public static <T_ANY extends Any<T>, T> T_ANY asUnmodifiable(T_ANY src) {
+        return (T_ANY) ((null == src) ? null : src.asUnmodifiable());
+    }
     
     public static final Mapper<Any<?>, Any<?>> MAPPER_AS_UNMODIFIABLE = new Mapper<Any<?>, Any<?>>() {
         public Any<?> apply(Any<?> value) {
