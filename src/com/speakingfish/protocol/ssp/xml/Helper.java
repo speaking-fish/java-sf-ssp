@@ -384,6 +384,10 @@ public class Helper {
     }
 
     public static Any<?> xmlFileToAny(final String srcFilename) {
+        return xmlFileToAny(new File(srcFilename));
+    }
+    
+    public static Any<?> xmlFileToAny(final File srcFile) {
         DocumentBuilder docBuilder;
         try {
             docBuilder = __docFactory.newDocumentBuilder();
@@ -391,7 +395,7 @@ public class Helper {
             throw new RuntimeException(e);
         }
         try {
-            final Document document = docBuilder.parse(new File(srcFilename));
+            final Document document = docBuilder.parse(srcFile);
             return readAny(document.getDocumentElement());
         } catch(SAXException e) {
             throw new RuntimeException(e);
@@ -399,4 +403,5 @@ public class Helper {
             throw new RuntimeException(e);
         }
     }
+    
 }

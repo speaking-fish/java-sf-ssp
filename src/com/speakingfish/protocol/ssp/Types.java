@@ -1,6 +1,7 @@
 package com.speakingfish.protocol.ssp;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -83,13 +84,30 @@ public class Types {
     @SafeVarargs
     public static Any<AnyObject> anyObject(Entry<String, ? extends Any<?>>... value) {
         final ObjectImpl<?> result = new ObjectImpl<Object>();
-        result.addStringEntries(asList(value));
+        result.addStringEntries(Arrays.asList(value));
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    @SafeVarargs
+    public static <X extends Any<?>> Any<AnyObject> anyObjects(Entry<String, X>... value) {
+        final ObjectImpl<?> result = new ObjectImpl<Object>();
+        result.addStringEntries((Iterable<Entry<String, ? extends Any<?>>>) (Iterable<?>) asList(value));
         return result;
     }
     
     public static Any<AnyObject> anyObject(Iterable<Entry<String, ? extends Any<?>>> value) {
+    //public static Any<AnyObject> anyObject(Iterable<Entry<String, ? extends Any<?>>> value) {
         final ObjectImpl<?> result = new ObjectImpl<Object>();
         result.addStringEntries(value);
+        return result;
+    }
+    
+    @SuppressWarnings("unchecked")
+    public static <X extends Any<?>> Any<AnyObject> anyObjects(Iterable<Entry<String, X>> value) {
+    //public static Any<AnyObject> anyObject(Iterable<Entry<String, ? extends Any<?>>> value) {
+        final ObjectImpl<?> result = new ObjectImpl<Object>();
+        result.addStringEntries((Iterable<Entry<String, ? extends Any<?>>>) (Iterable<?>) value);
         return result;
     }
 
