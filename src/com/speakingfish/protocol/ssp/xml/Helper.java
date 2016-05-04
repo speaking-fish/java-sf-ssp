@@ -365,6 +365,21 @@ public class Helper {
         } 
     }
 
+    public static boolean anyToXmlFile(final Any<?> src, final String destFilename, boolean append) {
+        try {
+            return anyToXmlFile(src, new FileWriter(destFilename, append));
+        } catch(IOException e) {
+            return false;
+        } 
+    }
+
+    public static boolean anyToXmlFile(final Any<?> src, final File destFile, boolean append) {
+        try {
+            return anyToXmlFile(src, new FileWriter(destFile, append));
+        } catch(IOException e) {
+            return false;
+        } 
+    }
     
     public static Any<?> xmlStringToAny(final String src) {
         DocumentBuilder docBuilder;
