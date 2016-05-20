@@ -303,6 +303,10 @@ public class Types {
         return (null == any) ? defaultValue : valueOf(any.item(name), defaultValue);
     }
 
+    public static <C, T> T valueOf(LocalAny<C, ?> any, LocalNamed<C, T> name) {
+        return valueOf(any, name, null);
+    }
+    
     public static <C, T> T valueOf(LocalAny<C, ?> any, LocalNamed<C, T> name, T defaultValue) {
         return (null == any) ? defaultValue : valueOf(any.item(name), defaultValue);
     }
