@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -290,7 +291,7 @@ public class Helper {
         }
         return null;
     }
-
+    
     public static String anyToXmlString(final Any<?> src) {
         DocumentBuilder docBuilder;
         try {
@@ -381,7 +382,7 @@ public class Helper {
         } 
     }
     
-    public static Any<?> xmlStringToAny(final String src) {
+    public static Document parseXML(final String src) {
         DocumentBuilder docBuilder;
         try {
             docBuilder = __docFactory.newDocumentBuilder();
@@ -390,8 +391,7 @@ public class Helper {
         }
         try {
             final ByteArrayInputStream temp = new ByteArrayInputStream(src.getBytes("UTF8"));
-            final Document document = docBuilder.parse(temp);
-            return readAny(document.getDocumentElement());
+            return  docBuilder.parse(temp);
         } catch(SAXException e) {
             throw new RuntimeException(e);
         } catch(IOException e) {
@@ -399,11 +399,7 @@ public class Helper {
         }
     }
 
-    public static Any<?> xmlFileToAny(final String srcFilename) {
-        return xmlFileToAny(new File(srcFilename));
-    }
-    
-    public static Any<?> xmlFileToAny(final File srcFile) {
+    public static Document parseXML(final InputStream src) {
         DocumentBuilder docBuilder;
         try {
             docBuilder = __docFactory.newDocumentBuilder();
@@ -411,13 +407,40 @@ public class Helper {
             throw new RuntimeException(e);
         }
         try {
-            final Document document = docBuilder.parse(srcFile);
-            return readAny(document.getDocumentElement());
+            return  docBuilder.parse(src);
         } catch(SAXException e) {
             throw new RuntimeException(e);
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    public static Document parseXML(final File srcFile) {
+        DocumentBuilder docBuilder;
+        try {
+            docBuilder = __docFactory.newDocumentBuilder();
+        } catch(ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            return docBuilder.parse(srcFile);
+        } catch(SAXException e) {
+            throw new RuntimeException(e);
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public static Any<?> xmlStringToAny(final String src) {
+        return readAny(parseXML(src).getDocumentElement());
+    }
+
+    public static Any<?> xmlFileToAny(final String srcFilename) {
+        return xmlFileToAny(new File(srcFilename));
+    }
+    
+    public static Any<?> xmlFileToAny(final File srcFile) {
+        return readAny(parseXML(srcFile).getDocumentElement());
     }
     
 }
