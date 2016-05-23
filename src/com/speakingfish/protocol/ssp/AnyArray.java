@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import com.speakingfish.common.function.Getter;
 import com.speakingfish.common.type.Named;
 
-public interface AnyArray extends Any<AnyArray> {
+public interface AnyArray extends AnyComplex<AnyArray> { //Any<AnyArray> {
     int          size           ();
     int    insert (int    index, Any<?> value);
     int    add    (              Any<?> value);

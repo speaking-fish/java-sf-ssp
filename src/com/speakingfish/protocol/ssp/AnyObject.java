@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import com.speakingfish.common.function.Getter;
 import com.speakingfish.common.type.Named;
 
-public interface AnyObject extends Any<AnyObject> {
+public interface AnyObject extends AnyComplex<AnyObject> { // Any<AnyObject> {
     int          size           ();
 
     String nameOf (int    index              );
