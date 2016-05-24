@@ -407,6 +407,9 @@ public class Types {
         public Object apply(Any<?> value) { return value.get(); }
     };
 
+    @SuppressWarnings("unchecked")
+    public static <T, T_Any extends Any<T>> Mapper<T, T_Any> mapperAnyValue() { return (Mapper<T, T_Any>) MAPPER_ANY_VALUE; }
+    
     public static final Mapper<Entry<String, Object>, Entry<String, Any<?>>> MAPPER_MAKE_ENTRY_ANY_VALUE = makeEntryValueMapper(MAPPER_ANY_VALUE);
     
     /**

@@ -226,6 +226,120 @@ public class Paths {
     }
 
     public static <
+        R, R_Any  extends Any<R>,
+        T, T_Any  extends Any<T>
+    > Any<?> forwardPathValue(
+        final int index,
+        final AnyPathValue<R, R_Any, T, T_Any> pathValue
+    ) {
+        final Mutable<Any<?>> result = mutable();
+        final PathValueVisitor<R, R_Any> visitor = new PathValueVisitor<R, R_Any>() {
+            int _level = 0;
+    
+            public <
+                T, T_Any extends Any<T>,
+                T_SubPath extends AnyPath<
+                    R, R_Any,
+                    T, T_Any
+                >
+            > void visitIndex(
+                AnyPath<R, R_Any, T, T_Any> path,
+                T_Any value,
+                int index,
+                T_SubPath next
+            ) {
+                visitValue(path, value);
+            }
+    
+            public <
+                T, T_Any extends Any<T>,
+                T_SubPath extends AnyPath<
+                    R, R_Any,
+                    T, T_Any
+                >
+            > void visitField(
+                AnyPath<R, R_Any, T, T_Any> path,
+                T_Any value,
+                String name,
+                T_SubPath next
+            ) {
+                visitValue(path, value);
+            }
+    
+            public <
+                T, T_Any extends Any<T>
+            > void visitValue(
+                AnyPath<R, R_Any, T, T_Any> path,
+                T_Any value
+            ) {
+                if(_level == index) {
+                    result.set((Any<?>) value);
+                }
+                ++_level;
+            }
+        };
+        pathValue.visitForward(visitor);
+        return result.get();
+    }
+
+    public static <
+        R, R_Any  extends Any<R>,
+        T, T_Any  extends Any<T>
+    > Any<?> backwardPathvalue(
+        final int index,
+        final AnyPathValue<R, R_Any, T, T_Any> pathValue
+    ) {
+        final Mutable<Any<?>> result = mutable();
+        final PathValueVisitor<R, R_Any> visitor = new PathValueVisitor<R, R_Any>() {
+            int _level = 0;
+    
+            public <
+                T, T_Any extends Any<T>,
+                T_SubPath extends AnyPath<
+                    R, R_Any,
+                    T, T_Any
+                >
+            > void visitIndex(
+                AnyPath<R, R_Any, T, T_Any> path,
+                T_Any value,
+                int index,
+                T_SubPath next
+            ) {
+                visitValue(path, value);
+            }
+    
+            public <
+                T, T_Any extends Any<T>,
+                T_SubPath extends AnyPath<
+                    R, R_Any,
+                    T, T_Any
+                >
+            > void visitField(
+                AnyPath<R, R_Any, T, T_Any> path,
+                T_Any value,
+                String name,
+                T_SubPath next
+            ) {
+                visitValue(path, value);
+            }
+    
+            public <
+                T, T_Any extends Any<T>
+            > void visitValue(
+                AnyPath<R, R_Any, T, T_Any> path,
+                T_Any value
+            ) {
+                if(_level == index) {
+                    result.set((Any<?>) value);
+                }
+                ++_level;
+            }
+        };
+        pathValue.visitBackward(visitor);
+        return result.get();
+    }
+    
+    public static <
         Start_R/* extends AnyComplex<Start_R>*/, Start_R_Any extends Any<Start_R>,
         Sub_R  , Sub_R_Any   extends Any<Sub_R  >,
         Start_T, Start_T_Any extends Any<Start_T>,
