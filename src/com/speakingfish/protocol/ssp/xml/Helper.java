@@ -215,13 +215,14 @@ public class Helper {
     }
 
     public static String readTextValue(final Element src) {
+        String result = "";
         final Node value = src.getFirstChild();
         if(null != value) {
             if(TEXT_NODE == value.getNodeType()) {
-                return value.getNodeValue();
+                result+= value.getNodeValue();
             }
         }
-        return "";
+        return result;
     }
 
     public static Any<?> readString   (final Element src) { return any(               readTextValue(src) ); }
