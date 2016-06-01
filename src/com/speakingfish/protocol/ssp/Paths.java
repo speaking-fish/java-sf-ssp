@@ -1,13 +1,23 @@
 package com.speakingfish.protocol.ssp;
 
+import java.util.Iterator;
 import java.util.Map.Entry;
 
+import com.speakingfish.common.function.Acceptor;
+import com.speakingfish.common.function.Mapper;
+import com.speakingfish.common.iterator.AcceptIterator;
 import com.speakingfish.common.value.Mutable;
 import com.speakingfish.protocol.ssp.path.AnyByIndexImpl;
 import com.speakingfish.protocol.ssp.path.AnyByNameImpl;
 import com.speakingfish.protocol.ssp.path.AnyEndOfPathImpl;
+import com.speakingfish.protocol.ssp.path.AnyPathExprImpl;
+import com.speakingfish.protocol.ssp.path.AnyPathListExprImpl;
+
+import jdk.nashorn.internal.runtime.arrays.IteratorAction;
 
 import static com.speakingfish.common.value.Mutables.*;
+import static com.speakingfish.common.Equals.*;
+import static com.speakingfish.common.iterator.Iterators.*;
 
 public class Paths {
 
@@ -63,6 +73,83 @@ public class Paths {
         >((T_Any) null, name, (AnyPathValue) next);
     }
 
+    public static <
+        R, R_Any  extends Any<R>,
+        T, T_Any  extends Any<T>,
+        N, N_Any  extends Any<N>,
+        T_SubPath extends AnyPath<
+            R, R_Any,
+            N, N_Any
+        >
+    > AnyPathContinuation<
+        R, R_Any,
+        T, T_Any,
+        N, N_Any,
+        T_SubPath
+    > pathExpr(Mapper<N_Any, T_Any> expr, T_SubPath next) {
+        return (AnyPathContinuation) new AnyPathExprImpl<
+            R, R_Any,
+            T, T_Any,
+            N, N_Any,
+            AnyPathValue<
+                R, R_Any,
+                N, N_Any
+            >
+        >((T_Any) null, expr, (AnyPathValue) next);
+    }
+
+    public static <
+        R, R_Any  extends Any<R>,
+        T, T_Any  extends Any<T>,
+        N, N_Any  extends Any<N>,
+        T_SubPath extends AnyPath<
+            R, R_Any,
+            N, N_Any
+        >
+    > AnyPathContinuation<
+        R, R_Any,
+        T, T_Any,
+        N, N_Any,
+        T_SubPath
+    > pathListExpr(Mapper<Iterator<N_Any>, T_Any> expr, T_SubPath next) {
+        return (AnyPathContinuation) new AnyPathListExprImpl<
+            R, R_Any,
+            T, T_Any,
+            N, N_Any,
+            AnyPathValue<
+                R, R_Any,
+                N, N_Any
+            >
+        >((T_Any) null, expr, (AnyPathValue) next);
+    }
+
+    public static <
+        R, R_Any  extends Any<R>,
+        T, T_Any  extends Any<T>,
+        N, N_Any  extends Any<N>,
+        T_SubPath extends AnyPath<
+            R, R_Any,
+            N, N_Any
+        >
+    > AnyPathContinuation<
+        R, R_Any,
+        T, T_Any,
+        N, N_Any,
+        T_SubPath
+    > pathSelectItemsWithAttribute(final String attr, final Any<?> attrValue, T_SubPath next) {
+        final Acceptor<Any<?>> acceptor = new Acceptor<Any<?>>() {
+            public boolean test(Any<?> test) {
+                return equalsOf(test.item(attr), attrValue, Any.class);
+            }};
+        return pathListExpr(
+            new Mapper<Iterator<N_Any>, T_Any>() {
+                public Iterator<N_Any> apply(T_Any parent) {
+                    return (Iterator<N_Any>) acceptIterator(parent.values().iterator(), acceptor);
+                }},
+            next
+            );
+    }
+    
     public static <T, T_Any extends Any<T>> AnyEndOfPathValue<T, T_Any> pathValue(T_Any value) { return new AnyEndOfPathImpl<T, T_Any>(value); }
     
     public static <
@@ -285,7 +372,7 @@ public class Paths {
     public static <
         R, R_Any  extends Any<R>,
         T, T_Any  extends Any<T>
-    > Any<?> backwardPathvalue(
+    > Any<?> backwardPathValue(
         final int index,
         final AnyPathValue<R, R_Any, T, T_Any> pathValue
     ) {

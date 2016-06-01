@@ -1,5 +1,7 @@
 package com.speakingfish.protocol.ssp;
 
+import java.util.Iterator;
+
 public interface AnyPathContinuation<
     R, R_Any  extends Any<R>,
     T, T_Any  extends Any<T>,
@@ -15,5 +17,6 @@ public interface AnyPathContinuation<
     
     T_SubPath next();
     N_Any     next(T_Any current);
+    Iterator<N_Any> following(T_Any current);
 
 }

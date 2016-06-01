@@ -1,10 +1,14 @@
 package com.speakingfish.protocol.ssp.path;
 
+import java.util.Iterator;
+
 import com.speakingfish.protocol.ssp.Any;
 import com.speakingfish.protocol.ssp.AnyEndOfPath;
 import com.speakingfish.protocol.ssp.AnyEndOfPathValue;
 import com.speakingfish.protocol.ssp.PathValueVisitor;
 import com.speakingfish.protocol.ssp.PathVisitor;
+
+import static com.speakingfish.common.iterator.Iterators.*;
 
 public class AnyEndOfPathImpl <
     T, T_Any extends Any<T>
@@ -51,6 +55,10 @@ public class AnyEndOfPathImpl <
 
     public void visitBackward(PathValueVisitor<T, T_Any> visitor) {
         visitor.visitValue(this, get());
+    }
+
+    public Iterator<T_Any> values(T_Any src) {
+        return (null == src) ? (Iterator<T_Any>) noneIterator() : singleIterator(src);
     }
     
     

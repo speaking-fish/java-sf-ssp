@@ -1,5 +1,7 @@
 package com.speakingfish.protocol.ssp;
 
+import java.util.Iterator;
+
 public interface AnyPath<
     R, R_Any  extends Any<R>,
     T, T_Any  extends Any<T>/*,
@@ -12,6 +14,7 @@ public interface AnyPath<
 > {
 
     R_Any value(T_Any src);
+    Iterator<R_Any> values(T_Any src);
 
     void visit(PathVisitor<R, R_Any> visitor);
     
