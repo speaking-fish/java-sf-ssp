@@ -3,16 +3,13 @@ package com.speakingfish.protocol.ssp.path;
 import java.util.Iterator;
 
 import com.speakingfish.common.function.Mapper;
-import com.speakingfish.common.iterator.ChainIterator;
+import com.speakingfish.common.iterator.Iterators;
 import com.speakingfish.protocol.ssp.Any;
-import com.speakingfish.protocol.ssp.AnyPath;
-import com.speakingfish.protocol.ssp.AnyPathContinuation;
 import com.speakingfish.protocol.ssp.AnyPathContinuationValue;
 import com.speakingfish.protocol.ssp.AnyPathValue;
 import com.speakingfish.protocol.ssp.PathVisitor;
 
 import static com.speakingfish.common.iterator.Iterators.*;
-import static com.speakingfish.common.type.Typecasts.*;
 
 public abstract class AnyPathContinuationImpl<
     R, R_Any  extends Any<R>,
@@ -59,12 +56,12 @@ public abstract class AnyPathContinuationImpl<
 
     public Iterator<N_Any> following(T_Any current) {
         final N_Any result = next(current);
-        return (null == result) ? (Iterator<N_Any>) noneIterator() : singleIterator(result);
+        return ((null == result) ? Iterators.<N_Any>noneIterator() : singleIterator(result));
     }
 
     public Iterator<R_Any> values(T_Any src) {
         final Iterator<N_Any> result = following(src);
-        return (null == result) ? (Iterator<R_Any>) noneIterator()
+        return (null == result) ? Iterators.<R_Any>noneIterator()
             : iteratorChain(mapIterator(result, new Mapper<Iterator<R_Any>, N_Any>() {
                 public Iterator<R_Any> apply(N_Any s) {
                     return next().values(s);

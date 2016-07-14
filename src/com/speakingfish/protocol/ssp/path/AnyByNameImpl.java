@@ -1,7 +1,6 @@
 package com.speakingfish.protocol.ssp.path;
 
 import com.speakingfish.protocol.ssp.Any;
-import com.speakingfish.protocol.ssp.AnyByName;
 import com.speakingfish.protocol.ssp.AnyByNameValue;
 import com.speakingfish.protocol.ssp.AnyPath;
 import com.speakingfish.protocol.ssp.AnyPathValue;
@@ -41,12 +40,14 @@ public class AnyByNameImpl<
     
     public String name() { return _name; }
 
+    @SuppressWarnings("unchecked")
     @Override public N_Any next(T_Any current) { return (null == current) ? null : (N_Any) current.item(name()); }
 
     @Override public void visit(PathVisitor<R, R_Any> visitor) {
         visitor.visitField(this, name(), next());
     }
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public void visitForward(T_Any src, PathValueVisitor<R, R_Any> visitor) {
         visitor.visitField(this, src, name(), (AnyPath) next());
         if(null != src) {
@@ -54,6 +55,7 @@ public class AnyByNameImpl<
         }
     }
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public void visitBackward(T_Any src, PathValueVisitor<R, R_Any> visitor) {
         if(null != src) {
             next().visitBackward(next(src), visitor);
@@ -65,11 +67,13 @@ public class AnyByNameImpl<
         return "." + name() + next();
     }
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public void visitForward(PathValueVisitor<R, R_Any> visitor) {
         visitor.visitField(this, get(), name(), (AnyPath) next());
         ((AnyPathValue) next()).visitForward(visitor);
     }
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public void visitBackward(PathValueVisitor<R, R_Any> visitor) {
         ((AnyPathValue) next()).visitBackward(visitor);
         visitor.visitField(this, get(), name(), (AnyPath) next());

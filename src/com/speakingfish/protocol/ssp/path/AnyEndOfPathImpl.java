@@ -2,8 +2,8 @@ package com.speakingfish.protocol.ssp.path;
 
 import java.util.Iterator;
 
+import com.speakingfish.common.iterator.Iterators;
 import com.speakingfish.protocol.ssp.Any;
-import com.speakingfish.protocol.ssp.AnyEndOfPath;
 import com.speakingfish.protocol.ssp.AnyEndOfPathValue;
 import com.speakingfish.protocol.ssp.PathValueVisitor;
 import com.speakingfish.protocol.ssp.PathVisitor;
@@ -58,7 +58,7 @@ public class AnyEndOfPathImpl <
     }
 
     public Iterator<T_Any> values(T_Any src) {
-        return (null == src) ? (Iterator<T_Any>) noneIterator() : singleIterator(src);
+        return (null == src) ? Iterators.<T_Any>noneIterator() : singleIterator(src);
     }
     
     
