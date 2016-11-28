@@ -1,6 +1,5 @@
 package com.speakingfish.protocol.ssp.type;
 
-
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +30,12 @@ public class AnyUnmodifiableImpl<CONTEXT, TYPE> extends AnyAbstractImpl<CONTEXT,
     
     protected final LocalAny<CONTEXT, TYPE> _origin;
     
-    public AnyUnmodifiableImpl(LocalAny<CONTEXT, TYPE> origin) {
+    protected LocalAny<CONTEXT, TYPE> _unmodifiableClone;
+    
+    public AnyUnmodifiableImpl(LocalAny<CONTEXT, TYPE> origin, boolean isUnmodifiableClone) {
         super();
-        _origin = origin;
+        _origin            = origin           ;
+        _unmodifiableClone = isUnmodifiableClone ? this : null;
     }
     
     @Override public short        type           () { return _origin.type           (); };
@@ -86,6 +88,19 @@ public class AnyUnmodifiableImpl<CONTEXT, TYPE> extends AnyAbstractImpl<CONTEXT,
     @Override public LocalAny<CONTEXT, TYPE> clone() {
         return _origin.clone();
     }
+    
+    @Override public LocalAny<CONTEXT, TYPE> cloneUnmodifiable() {
+        
+        if(null == _unmodifiableClone) {
+            return _origin.cloneUnmodifiable();
+        } else {
+            return _unmodifiableClone;
+        }
+        /*
+        return _origin.clone();
+        */
+    }
+    
     /*
     @Override public void visit(TypeVisitor visitor) {
         _origin.visit(visitor);

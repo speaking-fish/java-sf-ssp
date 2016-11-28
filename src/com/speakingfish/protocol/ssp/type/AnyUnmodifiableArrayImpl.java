@@ -6,7 +6,7 @@ import com.speakingfish.protocol.ssp.LocalAnyArray;
 
 
 public class AnyUnmodifiableArrayImpl<CONTEXT> extends AnyUnmodifiableImpl<CONTEXT, AnyArray> implements LocalAnyArray<CONTEXT>  {
-    public AnyUnmodifiableArrayImpl(LocalAny<CONTEXT, AnyArray> origin) {
-        super(origin);
+    public AnyUnmodifiableArrayImpl(LocalAny<CONTEXT, AnyArray> origin, boolean isUnmodifiableClone) {
+        super(origin, isUnmodifiableClone);
     }
 }

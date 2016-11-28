@@ -113,13 +113,17 @@ public class ArrayImpl<CONTEXT> extends AnyDefaultMutableImpl<CONTEXT, AnyArray>
     }
 
     @Override protected Any<AnyArray> makeUnmodifiable() {
-        return new AnyUnmodifiableArrayImpl<CONTEXT>(this);
+        return new AnyUnmodifiableArrayImpl<CONTEXT>(this, false);
     }
 
     @Override public LocalAny<CONTEXT, AnyArray> clone() {
         return new ArrayImpl<CONTEXT>(new ArrayList<Any<?>>(_value));
     }
 
+    @Override public LocalAny<CONTEXT, AnyArray> cloneUnmodifiable() {
+        return new AnyUnmodifiableArrayImpl<CONTEXT>(new ArrayImpl<CONTEXT>(new ArrayList<Any<?>>(_value)), true);
+    }
+    
     /*
     @Override public void visit(TypeVisitor visitor) {
         visitor.visitArray(this);

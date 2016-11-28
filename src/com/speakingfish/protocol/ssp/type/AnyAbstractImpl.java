@@ -82,6 +82,7 @@ public abstract class AnyAbstractImpl<CONTEXT, TYPE> implements LocalAny<CONTEXT
                                    public <            T> T                       value  (LocalNamed<CONTEXT, T> name              ) { return                           this.<T>value  ((Named<T>) name       ); };
     
     @Override public abstract LocalAny<CONTEXT, TYPE> clone();
+              public abstract LocalAny<CONTEXT, TYPE> cloneUnmodifiable();
     
     //@Override public abstract void visit(TypeVisitor visitor);
     //@Override public abstract <DEST> DEST visit(ValueVisitor<DEST, Any<TYPE>> visitor);

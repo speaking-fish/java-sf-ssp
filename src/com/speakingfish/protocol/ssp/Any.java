@@ -61,6 +61,7 @@ public interface Any<TYPE> extends Getter<TYPE> {
     <T> T      value  (Named<T> name              );
     
     Any<TYPE> clone();
+    Any<TYPE> cloneUnmodifiable();
     
     //void visit(TypeVisitor visitor);
     //<SOURCE, NESTED> void visit(SOURCE src, ValueVisitor<SOURCE, NESTED> visitor, NESTED nested);

@@ -10,5 +10,6 @@ public abstract class AnyDefaultPrimitiveImpl<CONTEXT, TYPE> extends AnyDefaultI
 
     @Override public LocalAny<CONTEXT, TYPE> clone() { return this; }
 
+    @Override public LocalAny<CONTEXT, TYPE> cloneUnmodifiable() { return this; }
 
 }

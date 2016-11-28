@@ -179,7 +179,7 @@ public class ObjectImpl<CONTEXT> extends AnyDefaultMutableImpl<CONTEXT, AnyObjec
     }
 
     @Override protected Any<AnyObject> makeUnmodifiable() {
-        return new AnyUnmodifiableObjectImpl<CONTEXT>(this);
+        return new AnyUnmodifiableObjectImpl<CONTEXT>(this, false);
     }
 
     @Override public LocalAny<CONTEXT, AnyObject> clone() {
@@ -189,6 +189,16 @@ public class ObjectImpl<CONTEXT> extends AnyDefaultMutableImpl<CONTEXT, AnyObjec
             );
     }
 
+    @Override public LocalAny<CONTEXT, AnyObject> cloneUnmodifiable() {
+        return new AnyUnmodifiableObjectImpl<CONTEXT>(
+            new ObjectImpl<CONTEXT>(
+                new ArrayList<String>(_names),
+                new ArrayList<Any<?>>(_value)
+                ),
+            true
+            );
+    }
+    
     /*
     @Override public void visit(TypeVisitor visitor) {
         visitor.visitObject(this);

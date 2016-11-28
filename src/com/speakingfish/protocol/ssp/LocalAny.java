@@ -24,4 +24,6 @@ public interface LocalAny<CONTEXT, TYPE> extends Any<TYPE> {
     <            T> T                       value  (LocalNamed<CONTEXT, T> name              );
 
     LocalAny<CONTEXT, TYPE> clone();
+    LocalAny<CONTEXT, TYPE> cloneUnmodifiable();
+    
 }
